@@ -67,6 +67,7 @@ const main = async () => {
 
 try{
   main()
+    .catch(e => console.log(e.stack))
 } catch(e){
-  console.error(e)
+  console.error(e.stack)
 }
