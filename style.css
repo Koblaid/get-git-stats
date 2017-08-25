@@ -1,0 +1,9 @@
+.chartrow {
+    display: flex;
+    height: 300px;
+}
+
+.chartcolumn {
+    height: 100%;
+    width: 50%;
+}

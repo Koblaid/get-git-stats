@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "babel-node index.js",
+    "start-server": "python3 -m http.server"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
