@@ -21,7 +21,7 @@ const JSON_FILE_NAME = 'out.jsonl'
 
 const unixTimestampToDate = ts => moment(parseInt(ts) * 1000)
 
-const writeJsonLines = (header, lines) => writeFileP(JSON_FILE_NAME, lines.map(JSON.stringify).join('\n'))
+const writeJsonLines = (lines) => writeFileP(JSON_FILE_NAME, lines.map(JSON.stringify).join('\n'))
 
 const readJsonLines = async (filepath) => {
   const file = await readFileP(filepath, 'utf-8')
