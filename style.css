@@ -1,6 +1,10 @@
-.chartrow {
+.chartrow1 {
     display: flex;
     height: 300px;
+}
+
+.chartrow2 {
+    height: 600px;
 }
 
 .chartcolumn {

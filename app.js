@@ -51,9 +51,52 @@ const renderChart = (text, htmlId, chartData) => {
   })
 }
 
+const renderTopFiveAuthorsPerMonthChart = data => {
+  const topFiveAuthors = _(data)
+    .countBy(row => row.email)
+    .map((count, email) => ({email, count}))
+    .orderBy(row => row.count)
+    .takeRight(5)
+    .map(row => row.email)
+    .value()
+
+  const authorNames = _.zipObject(
+    topFiveAuthors,
+    _.map(topFiveAuthors, email => data.find(row => row.email === email).name[0])
+  )
+
+  const authorsCommitPerMonth = _(data)
+    .filter(row => topFiveAuthors.indexOf(row.email) !== -1)
+    .groupBy(row => row.email)
+    .mapValues(authorsCommits => _(authorsCommits)
+      .groupBy(row => moment.unix(row.timestamp).format('YYYY-MM'))
+      .map((commits, time) => [toMs(time), commits.length])
+      .sortBy(row => row[0])
+      .value()
+    )
+    .value()
+
+  const text = 'Commits of top five authors per month'
+  Highcharts.stockChart('chart5', {
+    title: {
+      text,
+    },
+    yAxis: {
+      title: {
+        text,
+      }
+    },
+    series: _.map(authorsCommitPerMonth, (commits, email) => ({
+      name: authorNames[email],
+      data: commits,
+    }))
+  })
+}
+
 loadData().then( data => {
   renderChart('Commits per month', 'chart1', getCommitsPerMonth(data))
   renderChart('Total commits', 'chart2', addMonthlyNumbers(getCommitsPerMonth(data)))
   renderChart('Authors per month', 'chart3', getAuthorsPerMonth(data))
   renderChart('Total authors', 'chart4', addMonthlyNumbers(getAuthorsPerMonth(data)))
+  renderTopFiveAuthorsPerMonthChart(data)
 })
