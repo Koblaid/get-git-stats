@@ -52,8 +52,8 @@ const renderChart = (text, htmlId, chartData) => {
 }
 
 loadData().then( data => {
-  renderChart('Total commits', 'chart1', getCommitsPerMonth(data))
+  renderChart('Commits per month', 'chart1', getCommitsPerMonth(data))
   renderChart('Total commits', 'chart2', addMonthlyNumbers(getCommitsPerMonth(data)))
-  renderChart('Total commits', 'chart3', getAuthorsPerMonth(data))
-  renderChart('Total commits', 'chart4', addMonthlyNumbers(getAuthorsPerMonth(data)))
+  renderChart('Authors per month', 'chart3', getAuthorsPerMonth(data))
+  renderChart('Total authors', 'chart4', addMonthlyNumbers(getAuthorsPerMonth(data)))
 })
